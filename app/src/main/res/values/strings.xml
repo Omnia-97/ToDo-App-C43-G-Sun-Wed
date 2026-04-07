@@ -5,14 +5,21 @@
     <string name="add_new_text">Add New Text</string>
     <string name="enter_your_task">enter your task...</string>
     <string name="enter_task_description">Enter task description...</string>
-    <string name="select_date">Select Date:-</string>
+    <string name="select_date">Select Date</string>
     <string name="date_hint">- Click to select the date -</string>
     <string name="time_hint">- Click to select the time -</string>
-    <string name="select_time">Select time:-</string>
+    <string name="select_time">Select time</string>
     <string name="save">Save</string>
     <string name="task_title_is_required">Task Title is required.</string>
     <string name="task_desc_is_required">Task description is required.</string>
     <string name="task_title_is_short">Task Title is short</string>
     <string name="please_select_date">Please select date</string>
     <string name="to_do_list">To Do List</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title">Title</string>
+    <string name="task_details">Task details</string>
+    <string name="_12_00_am">12:00 AM</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="edit_task">Edit Task</string>
 </resources>

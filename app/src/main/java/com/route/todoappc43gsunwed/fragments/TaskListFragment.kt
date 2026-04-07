@@ -48,8 +48,12 @@ class TaskListFragment : Fragment() {
         binding.tasksRecyclerView.adapter = adapter
         getAllTasks()
         initCalendarView()
-        adapter.onTaskClickListener = {
-            Toast.makeText(requireContext(), it.title ?: "", Toast.LENGTH_SHORT).show()
+        adapter.onTaskClickListener =  { task ->
+            val editFragment = EditTaskFragment.newInstance(task)
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.task_fragment_container, editFragment)
+                .addToBackStack(null)
+                .commit()
         }
     }
 
@@ -143,6 +147,18 @@ class TaskListFragment : Fragment() {
         val tasks =
             TaskDatabase.getInstance(requireContext().applicationContext).getTaskDao().getAllTasks()
         adapter.updateTasks(tasks)
+    }
+    override fun onResume() {
+        super.onResume()
+        if (selectedDate != null) {
+            val startDate = Date.from(selectedDate?.toCalendarInstant())
+            calendar.time = startDate
+            calendar.clearTime()
+            val endDate = calendar.time.time + 86_400_000L
+            getTasksByDate(calendar.time, Date(endDate))
+        } else {
+            getAllTasks()
+        }
     }
     // How to make 2 Fragments Communicate With Each other ?
     //              1-  Interface Callback / Delegates
