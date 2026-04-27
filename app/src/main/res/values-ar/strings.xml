@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">تطبيق المهام</string>
+    <string name="tasks">المهام</string>
+    <string name="settings">الإعدادات</string>
+    <string name="add_new_text">إضافة مهمة جديدة</string>
+    <string name="enter_your_task">أدخل مهمتك...</string>
+    <string name="enter_task_description">أدخل وصف المهمة...</string>
+    <string name="select_date">اختر التاريخ</string>
+    <string name="date_hint">- اضغط لاختيار التاريخ -</string>
+    <string name="time_hint">- اضغط لاختيار الوقت -</string>
+    <string name="select_time">اختر الوقت</string>
+    <string name="save">حفظ</string>
+    <string name="task_title_is_required">عنوان المهمة مطلوب.</string>
+    <string name="task_desc_is_required">وصف المهمة مطلوب.</string>
+    <string name="task_title_is_short">عنوان المهمة قصير جداً</string>
+    <string name="please_select_date">الرجاء اختيار التاريخ</string>
+    <string name="to_do_list">قائمة المهام</string>
+    <string name="hello_blank_fragment">مرحباً</string>
+    <string name="title">العنوان</string>
+    <string name="task_details">تفاصيل المهمة</string>
+    <string name="_12_00_am">12:00 ص</string>
+    <string name="save_changes">حفظ التغييرات</string>
+    <string name="edit_task">تعديل المهمة</string>
+    <string name="language">اللغة</string>
+    <string name="mode">الوضع</string>
+    <string name="light">فاتح</string>
+    <string name="dark">داكن</string>
+    <string-array name="languages">
+        <item>English</item>
+        <item>العربية</item>
+    </string-array>
+    <string-array name="themes">
+        <item>فاتح</item>
+        <item>داكن</item>
+    </string-array>
+</resources>
