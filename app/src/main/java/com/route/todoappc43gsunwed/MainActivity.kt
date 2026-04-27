@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        initBottomNavView()
+        initBottomNavView(savedInstanceState)
 
 
     }
@@ -46,28 +46,47 @@ class MainActivity : AppCompatActivity() {
         super.attachBaseContext(context)
     }
 
-    private fun initBottomNavView() {
-        val prefs = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-
+    private fun initBottomNavView(savedInstanceState: Bundle?) {
         binding.todoBottomAppBar.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.navigation_tasks -> pushFragment(taskListFragment)
-                R.id.navigation_settings -> pushFragment(settingsFragment)
+                R.id.navigation_tasks -> {
+                    pushFragment(taskListFragment)
+                }
+
+                R.id.navigation_settings -> {
+                    pushFragment(settingsFragment)
+                }
             }
             return@setOnItemSelectedListener true
         }
-
-        val lastTab = prefs.getInt("last_tab", R.id.navigation_tasks)
-        binding.todoBottomAppBar.selectedItemId = lastTab
-
-        binding.todoBottomAppBar.setOnItemSelectedListener {
-            prefs.edit().putInt("last_tab", it.itemId).apply()
-            when (it.itemId) {
-                R.id.navigation_tasks -> pushFragment(taskListFragment)
-                R.id.navigation_settings -> pushFragment(settingsFragment)
-            }
-            return@setOnItemSelectedListener true
+        if (savedInstanceState == null) {
+            binding.todoBottomAppBar.selectedItemId = R.id.navigation_tasks
+            pushFragment(taskListFragment)
         }
+        binding.addFab.setOnClickListener {
+            val bottomSheet = AddTaskBottomSheetFragment()
+            bottomSheet.onTaskAddedListener = object : OnTaskAddedListener {
+                override fun onTaskAdded() {
+                    if (taskListFragment.isVisible) {
+                        if (taskListFragment.selectedDate != null) {
+                            val startDate = Date.from(
+                                taskListFragment.selectedDate?.toCalendarInstant()
+                            )
+                            calendar.time = startDate
+                            calendar.clearTime()
+                            val secondsInDay = 86_400_000L
+                            val endDate = calendar.time.time + secondsInDay
+                            taskListFragment.getTasksByDate(
+                                calendar.time, Date(endDate)
+                            )
+                        } else
+                            taskListFragment.getAllTasks()
+                    }
+                }
+            }
+            bottomSheet.show(supportFragmentManager, null)
+        }
+
     }
 
     private fun pushFragment(fragment: Fragment) {
