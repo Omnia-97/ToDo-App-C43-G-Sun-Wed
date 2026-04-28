@@ -40,6 +40,9 @@ class EditTaskFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentEditTaskBinding.inflate(inflater, container, false)
+        val isRTL = resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
+
+        binding.backButton.scaleX = if (isRTL) -1f else 1f
         return binding.root
     }
 
