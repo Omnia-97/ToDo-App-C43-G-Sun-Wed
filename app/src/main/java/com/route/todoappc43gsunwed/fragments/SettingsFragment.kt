@@ -33,6 +33,7 @@ class SettingsFragment : Fragment() {
         setupThemeSpinner()
     }
 
+
     private fun setupLanguageSpinner() {
         val languages = resources.getStringArray(R.array.languages)
         val adapter = ArrayAdapter(
@@ -117,12 +118,7 @@ class SettingsFragment : Fragment() {
 
 
     private fun applyLanguage(langCode: String) {
-        val locale = Locale(langCode)
-        Locale.setDefault(locale)
-        val config = requireContext().resources.configuration
-        config.setLocale(locale)
-        requireContext().createConfigurationContext(config)
-
+        saveLanguage(langCode)
         requireActivity().recreate()
     }
 
@@ -135,4 +131,5 @@ class SettingsFragment : Fragment() {
         return requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
             .getString("language", "en") ?: "en"
     }
+
 }

@@ -12,14 +12,12 @@ import com.route.todoappc43gsunwed.extension.toCalendarInstant
 import com.route.todoappc43gsunwed.fragments.AddTaskBottomSheetFragment
 import com.route.todoappc43gsunwed.fragments.SettingsFragment
 import com.route.todoappc43gsunwed.fragments.TaskListFragment
-import java.time.ZoneId
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding // null
-    private val taskListFragment = TaskListFragment()
     private val settingsFragment = SettingsFragment()
     private val calendar = Calendar.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,13 +33,18 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
     override fun attachBaseContext(newBase: Context) {
         val prefs = newBase.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
         val lang = prefs.getString("language", "en") ?: "en"
+
         val locale = Locale(lang)
         Locale.setDefault(locale)
+
         val config = newBase.resources.configuration
         config.setLocale(locale)
+        config.setLayoutDirection(locale)
+
         val context = newBase.createConfigurationContext(config)
         super.attachBaseContext(context)
     }
@@ -50,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         binding.todoBottomAppBar.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.navigation_tasks -> {
-                    pushFragment(taskListFragment)
+                    pushFragment(TaskListFragment())
                 }
 
                 R.id.navigation_settings -> {
@@ -61,26 +64,26 @@ class MainActivity : AppCompatActivity() {
         }
         if (savedInstanceState == null) {
             binding.todoBottomAppBar.selectedItemId = R.id.navigation_tasks
-            pushFragment(taskListFragment)
+            pushFragment(TaskListFragment())
         }
         binding.addFab.setOnClickListener {
             val bottomSheet = AddTaskBottomSheetFragment()
             bottomSheet.onTaskAddedListener = object : OnTaskAddedListener {
                 override fun onTaskAdded() {
-                    if (taskListFragment.isVisible) {
-                        if (taskListFragment.selectedDate != null) {
+                    if (TaskListFragment().isVisible) {
+                        if (TaskListFragment().selectedDate != null) {
                             val startDate = Date.from(
-                                taskListFragment.selectedDate?.toCalendarInstant()
+                                TaskListFragment().selectedDate?.toCalendarInstant()
                             )
                             calendar.time = startDate
                             calendar.clearTime()
                             val secondsInDay = 86_400_000L
                             val endDate = calendar.time.time + secondsInDay
-                            taskListFragment.getTasksByDate(
+                            TaskListFragment().getTasksByDate(
                                 calendar.time, Date(endDate)
                             )
                         } else
-                            taskListFragment.getAllTasks()
+                            TaskListFragment().getAllTasks()
                     }
                 }
             }
